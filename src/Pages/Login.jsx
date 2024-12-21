@@ -1,12 +1,14 @@
 import Lottie from 'react-lottie-player';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import login from '../assets/Lottie/signin.json';
 import { useContext } from 'react';
 import { AuthContext } from '../Providers/AuthProvider';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
     const { user ,signIn, signInWithGoogle } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSigninUser = (e) => {
         e.preventDefault();
@@ -19,16 +21,20 @@ const Login = () => {
 
         signIn(email, pass)
         .then(data => {
-            console.log(data.user);
+          toast.success('Logged in successfull!')
+          console.log(data.user);
         })
         .catch(error =>{
-            console.log(error.message);
+            // console.log(error.message);
+            toast.error(`${error.message}`);
         }) 
     }
 
     const handleGoogle = () => {
         signInWithGoogle()
         .then(data => {
+            toast.success('Logged in successfull!');
+            navigate('/');
             console.log(data.user)
         })
     }

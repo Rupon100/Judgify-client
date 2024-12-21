@@ -1,13 +1,15 @@
 import Lottie from 'react-lottie-player';
 import signup from '../assets/Lottie/signup.json';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../Providers/AuthProvider';
-// import CVBaseElement from './../../node_modules/lottie-web/player/js/elements/canvasElements/CVBaseElement';
+import { toast } from 'react-hot-toast';
+ 
 
 const SigninUp = () => {
 
     const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleCreateUser = (e) => {
         e.preventDefault();
@@ -18,8 +20,9 @@ const SigninUp = () => {
         const pass = form.pass.value;
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-        if(passwordRegex.test(pass)){
+        if(!passwordRegex.test(pass)){
             // return hot TransformStream;
+            return toast.error('Password needs 1 uppercase, 1 lowercase, and 1 number');
         }
 
         const newUser = { name, email, photo, pass }
@@ -28,6 +31,8 @@ const SigninUp = () => {
         createUser(email, pass)
         .then(data => {
             updateUserProfile(name, photo);
+            toast.success('Register Successfull!');
+            navigate('/');
             console.log(data.user)
         })
 

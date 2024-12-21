@@ -9,12 +9,12 @@ const Navbar = () => {
 
     const links = <>
        <Link to='/' >Home</Link>
-       <Link >Services</Link>
+       <Link to='/services' >Services</Link>
        {
         user && <>
-          <Link >Add Service</Link>
-          <Link >My Reviews</Link>
-          <Link >User Avatar</Link>
+          <Link to='/add-service' >Add Service</Link>
+          <Link to='/my-reviews' >My Reviews</Link>
+          <Link to='/avater' >User Avatar</Link>
         </>
        }
     </>

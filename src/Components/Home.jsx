@@ -1,5 +1,6 @@
 import Banner from "./Banner";
 import Features from "./Features";
+import MeetPartners from "./MeetPartners";
 
  
 const Home = () => {
@@ -9,6 +10,8 @@ const Home = () => {
             <Banner></Banner>
             {/* featured section */}
             <Features></Features>
+            {/* meet out partners */}
+            <MeetPartners></MeetPartners>
             {/* two more releavent section */}
             
         </div>
