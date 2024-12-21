@@ -2,7 +2,7 @@ import Lottie from 'react-lottie-player';
 import signup from '../assets/Lottie/signup.json';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import AuthProvider, { AuthContext } from '../Providers/AuthProvider';
+import { AuthContext } from '../Providers/AuthProvider';
 // import CVBaseElement from './../../node_modules/lottie-web/player/js/elements/canvasElements/CVBaseElement';
 
 const SigninUp = () => {
@@ -16,6 +16,11 @@ const SigninUp = () => {
         const email = form.email.value;
         const photo = form.photo.value;
         const pass = form.pass.value;
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        if(passwordRegex.test(pass)){
+            // return hot TransformStream;
+        }
 
         const newUser = { name, email, photo, pass }
         console.log(newUser)
