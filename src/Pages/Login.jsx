@@ -2,10 +2,13 @@ import Lottie from 'react-lottie-player';
 import { Link } from 'react-router-dom';
 import login from '../assets/Lottie/signin.json';
 
+
 const Login = () => {
+
+
+
     return (
         <div className='min-h-screen flex justify-center items-center max-w-5xl mx-auto p-10' >
-        
             <div className='flex flex-col-reverse md:flex-row justify-between items-center w-full h-full p-10 gap-4' >
             <div className='w-full' >
                 <div className="max-w-lg card bg-base-100 w-full shrink-0">
@@ -23,7 +26,9 @@ const Login = () => {
                       <input type="password" placeholder="password" className="input input-bordered" required />
                     </div>
                     <div className="form-control mt-6">
-                    <button className="btn bg-gray-800 text-white hover:bg-gray-700">Log in</button>
+                       <button className="btn bg-gray-800 text-white hover:bg-gray-700">Log in</button>
+                       <div className="divider">OR</div>
+                       <button className="btn bg-gray-800 text-white hover:bg-gray-700" >Google</button>
                     </div>
                     <div>
 
