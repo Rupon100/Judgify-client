@@ -13,6 +13,7 @@ const Navbar = () => {
        {
         user && <>
           <Link to='/add-service' >Add Service</Link>
+          <Link to='/my-services' >MY Service</Link>
           <Link to='/my-reviews' >My Reviews</Link>
           <Link to='/avater' >User Avatar</Link>
         </>
