@@ -1,28 +1,55 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { AuthContext } from "../Providers/AuthProvider";
+import ReviewCard from "./ReviewCard";
 
 const CardDetails = () => {
+    const { user } = useContext(AuthContext);
     const currentDate = new Date().toISOString().split('T')[0];
-    const [rating, setRating] = useState(3);
-    const id = useParams();
+    const [rating, setRating] = useState(0);
+    const [reviews, setReviews] = useState([]);
+    const {id} = useParams();
     const loadedData = useLoaderData();
-    // console.log(rating);
+    // console.log(reviews)
+    
+    useEffect(() => {
+        fetchAll();
+    }, []);
+
+    const fetchAll = async () => {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
+        // console.log('specific review' ,data);
+        setReviews(data);
+    }
 
     const {category, company, date, description, email, price, service_image, title, website} = loadedData || {};
-
-    const handleReviewAdd = (e) => {
+    const handleReviewAdd = async (e) => {
         e.preventDefault();
         const form = e.target;
         const message = form.review.value;
         const date = currentDate;
         const rtng = rating;
+        const userEmail = user?.email;
+        const userName  = user?.displayName;
+        const photo = user?.photoURL;
 
-        const review = { serviceId: id, serviceOwner: email,message, date, rtng };
-        console.log(review)
+        const review = { id, message, date, rtng, userEmail, userName, photo};
+        // console.log(review)
+
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-review`, review);
+        // console.log(data);
+        if(data.insertedId){
+            fetchAll();
+            form.reset();
+            return toast.success("Review Added!");
+        }
 
     }
+
 
     return (
         <div>
@@ -57,6 +84,18 @@ const CardDetails = () => {
                          </div>
                         <button className="btn bg-gray-800 hover:bg-gray-700 text-white" >Add Review</button>
                    </form>
+                </div>
+                <div>
+                    <div className="flex w-full flex-col">
+                      <div className="divider">
+                        <h3 className="font-semibold text-lg" >All Reviews of this Services</h3>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-3" >
+                        {
+                            reviews.map(review => <ReviewCard key={review._id} review={review} ></ReviewCard>)
+                        }
+                    </div>
                 </div>
             </div>
         </div>

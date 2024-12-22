@@ -13,9 +13,8 @@ const Navbar = () => {
        {
         user && <>
           <Link to='/add-service' >Add Service</Link>
-          <Link to='/my-services' >MY Service</Link>
+          <Link to='/my-services' >My Service</Link>
           <Link to='/my-reviews' >My Reviews</Link>
-          <Link to='/avater' >User Avatar</Link>
         </>
        }
     </>
@@ -57,7 +56,12 @@ const Navbar = () => {
             </div>
             <div className="navbar-end space-x-2">
                {
-                user ? <button onClick={handleLogout} className="border px-3 py-1 hover:bg-white hover:text-black transition-all" >Log out</button> : <>
+                user ? 
+                <>
+                  <button onClick={handleLogout} className="border px-3 py-1 hover:bg-white hover:text-black transition-all" >Log out</button>
+                  <img className="h-12 w-12 rounded-full cursor-pointer border" src={user?.photoURL} alt="profile" referrerPolicy="no-referrer" />
+                </>
+                 : <>
                   <Link to='/login' className="border px-3 py-1 hover:bg-white hover:text-black transition-all" >Log in</Link>
                   <Link to='/signin'  className="border px-3 py-1 hover:bg-white hover:text-black transition-all" >Register</Link>
                 </>
