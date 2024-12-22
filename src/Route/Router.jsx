@@ -11,6 +11,7 @@ import MyReviews from "../Pages/MyReviews";
 import UseAvater from "../Pages/UseAvater";
 import PrivateRoute from "./PrivateRoute";
 import MyServices from "../Components/MyServices";
+import CardDetails from "../Components/CardDetails";
 
 const Router = createBrowserRouter([
     {
@@ -49,6 +50,11 @@ const Router = createBrowserRouter([
             {
                 path: '/avater',
                 element: <PrivateRoute><UseAvater></UseAvater></PrivateRoute>
+            },
+            {
+                path: '/service-details/:id',
+                element: <PrivateRoute><CardDetails></CardDetails></PrivateRoute>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/service-details/${params.id}`)
             }
         ]
     }

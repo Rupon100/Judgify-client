@@ -1,8 +1,15 @@
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const ServiceCard = ({ service }) => {
-    const { service_image, title, description, category, price } = service || {};
+    const { _id ,service_image , title, description, category, price } = service || {};
+    // console.log(service_image,)
     
+    // const handleDetails = async (_id) => {
+    //     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/${_id}`);
+    // }
+    // onClick={handleDetails}
+
     return (
         <div>
             <div className="space-y-2 border" >
@@ -12,7 +19,7 @@ const ServiceCard = ({ service }) => {
                     <p>{description}</p>
                     <p className="p-1 border rounded-lg bg-gray-100 text-sm" >{category}</p>
                     <h4 className="font-semibold" >Price: ${price}</h4>
-                    <Link to={``} className="btn text-white bg-gray-800 hover:bg-gray-700" >See Details</Link>
+                    <Link to={`/service-details/${_id}`} className="btn text-white bg-gray-800 hover:bg-gray-700" >See Details</Link>
                 </div>
             </div>
         </div>

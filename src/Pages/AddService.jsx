@@ -38,7 +38,7 @@ const AddService = () => {
                             <label className="label">
                               <span className="label-text">Service Image</span>
                             </label>
-                            <input type="text" placeholder="service image" name="service-image" className="input input-bordered" required />
+                            <input type="text" placeholder="service image" name="service_image" className="input input-bordered" required />
                           </div>
                           <div className="form-control">
                             <label className="label">
