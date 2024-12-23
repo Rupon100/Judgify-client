@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import { Helmet } from "react-helmet";
 
 
 const MyServices = () => {
@@ -93,6 +94,9 @@ const MyServices = () => {
 
     return (
         <div className="flex flex-col gap-6 p-4 m-4">
+          <Helmet>
+            <title>Judgify | My Service</title>
+          </Helmet>
             <div className="max-w-xl mx-auto" >
                 <label className="input input-bordered flex items-center gap-2">
                   <input onChange={(e) => handleSearch(e)} type="text" className="grow" placeholder="Search" />

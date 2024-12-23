@@ -4,6 +4,7 @@ import Faq from "./Faq";
 import Features from "./Features";
 import MeetPartners from "./MeetPartners";
 import { motion, useSpring, useScroll } from "motion/react"
+import {Helmet} from "react-helmet"
 
  
 const Home = () => {
@@ -31,6 +32,10 @@ const Home = () => {
                     backgroundColor: "#333634",
                 }}
             />
+
+            <Helmet>
+                <title>Judgify | Home</title>
+            </Helmet>
 
             {/* banenr swiper js */}
             <Banner></Banner>

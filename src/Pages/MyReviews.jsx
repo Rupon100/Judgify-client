@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import { Helmet } from "react-helmet";
 
 const MyReviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -43,9 +44,6 @@ const MyReviews = () => {
         
     }
 
-
-
-
     const handleDelete = async (id) => {
         try{
             Swal.fire({
@@ -72,12 +70,11 @@ const MyReviews = () => {
           }
     }
 
-
-
-
-
     return (
         <div className="p-4 m-4 max-w-5xl mx-auto space-y-5 " >
+          <Helmet>
+            <title>Judgify | My Reviews</title>
+          </Helmet>
             <h2 className="font-semibold text-2xl text-center">Your Reviews</h2>
             <div className="grid grid-cols-1 w-full " >
                 {

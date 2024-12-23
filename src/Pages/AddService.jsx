@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from './../Providers/AuthProvider';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { Helmet } from "react-helmet";
 
  
 
@@ -29,6 +30,9 @@ const AddService = () => {
 
     return (
         <div className="p-10 flex items-center" >
+          <Helmet>
+            <title>Judgify | Add Service</title>
+          </Helmet>
             <div className="w-full" >
                 <h2 className="text-2xl text-center  font-semibold" >Add a Service</h2>
                 <div className="max-w-3xl mx-auto " >

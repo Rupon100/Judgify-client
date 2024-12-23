@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../Providers/AuthProvider";
 import ReviewCard from "./ReviewCard";
+import { Helmet } from "react-helmet";
 
 const CardDetails = () => {
     const { user } = useContext(AuthContext);
@@ -50,11 +51,12 @@ const CardDetails = () => {
 
     }
 
-    console.log(reviews)
-
 
     return (
         <div>
+            <Helmet>
+                <title>Judgify | Details</title>
+            </Helmet>
             <div className="max-w-5xl mx-auto p-4 m-4 flex flex-col gap-4 border" >
                 <div>
                     <img className="object-cover object-center h-[400px] w-full rounded " src={service_image} alt="" />

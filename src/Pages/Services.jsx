@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ServiceCard from '../Components/ServiceCard';
+import {Helmet} from "react-helmet"
 
 const Services = () => {
     const [services, setServices] = useState([]);
@@ -17,6 +18,9 @@ const Services = () => {
 
     return (
         <div className='p-10 space-y-10' >
+            <Helmet>
+                <title>Judgify | Services</title>
+            </Helmet>
             <h2 className='font-semibold text-2xl text-center' >Services</h2>
             <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3' >
                 {
