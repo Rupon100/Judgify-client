@@ -14,14 +14,13 @@ const CardDetails = () => {
     const [reviews, setReviews] = useState([]);
     const {id} = useParams();
     const loadedData = useLoaderData();
-    // console.log(reviews)
     
     useEffect(() => {
         fetchAll();
     }, []);
 
     const fetchAll = async () => {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviewss/${id}`);
         // console.log('specific review' ,data);
         setReviews(data);
     }
@@ -36,8 +35,9 @@ const CardDetails = () => {
         const userEmail = user?.email;
         const userName  = user?.displayName;
         const photo = user?.photoURL;
+        console.log(title);
 
-        const review = { id, message, date, rtng, userEmail, userName, photo};
+        const review = { id, message, date, rtng, userEmail, userName, photo, title};
         // console.log(review)
 
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-review`, review);
@@ -49,6 +49,8 @@ const CardDetails = () => {
         }
 
     }
+
+    console.log(reviews)
 
 
     return (
