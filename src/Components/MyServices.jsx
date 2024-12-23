@@ -4,6 +4,8 @@ import { AuthContext } from "../Providers/AuthProvider";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 
 const MyServices = () => {
@@ -16,11 +18,27 @@ const MyServices = () => {
         fetchAll();
     }, [])
 
+
     const fetchAll = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`);
         setServices(data);
     }
-    
+
+    const handleSearch = (e) => {
+      const searchValue = e.target.value.toLowerCase(); 
+      console.log(searchValue)
+
+      if(!searchValue){
+        fetchAll();
+      }else {
+        const filter = services.filter(service => service.title.includes(searchValue));
+        setServices(filter)
+        console.log(filter)
+      }
+
+    }
+
+  
     // edit service
     const handleEdit = async (id) => {
         console.log(id);
@@ -28,13 +46,11 @@ const MyServices = () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-service/${id}`);
         setEditService(data[0])
     }
-    // console.log(serviceId)
-
+    
     const handleUpdateService = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const dataInfo = Object.fromEntries(formData.entries());
-        console.log(dataInfo);
 
         try{
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
@@ -47,21 +63,39 @@ const MyServices = () => {
         }
     }
 
-    
-
-    const handleDelt = (id) => {
+    const handleDelt = async (id) => {
+      try{
+        Swal.fire({
+          title: "Are you sure you want to delete this service?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/delete-servie/${id}`);
+            console.log(data)
+            if (data.deletedCount) {
+              Swal.fire("Deleted!", "Your service has been deleted.", "success");
+              fetchAll(); 
+            } else {
+              Swal.fire("Error", "Failed to delete the service.", "error");
+            }
+          } 
+        });
+      }catch(err){
+        toast(`${err}`)
+      }
 
     }
 
-    const handleCloseModal = () => {
- 
-    }
 
     return (
         <div className="flex flex-col gap-6 p-4 m-4">
             <div className="max-w-xl mx-auto" >
                 <label className="input input-bordered flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Search" />
+                  <input onChange={(e) => handleSearch(e)} type="text" className="grow" placeholder="Search" />
                 </label>
             </div>
            
@@ -122,7 +156,7 @@ const MyServices = () => {
                             <label className="label">
                               <span className="label-text">Title</span>
                             </label>
-                            <input type="text" disabled defaultValue={editService?.title} placeholder="title" name="title" className="input input-bordered" required />
+                            <input type="text" defaultValue={editService?.title} disabled placeholder="title" name="title" className="input input-bordered" required />
                           </div>
                           <div className="form-control">
                             <label className="label">

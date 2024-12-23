@@ -65,7 +65,6 @@ const CardDetails = () => {
                     <p>Category: <span className="text-sm p-1 border rounded-lg"> {category}</span></p>
                     <p>Email: {email}</p>
                     <a href={website}>{website}</a>
-                    <h4 className="font-semibold text-lg" >Total Review: 0</h4>
                 </div>
                 <div className="border rounded-lg w-full p-4">
                    <form onSubmit={handleReviewAdd} className="max-w-2xl mx-auto space-y-3" >

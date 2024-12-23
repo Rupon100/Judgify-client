@@ -4,19 +4,16 @@ import ServiceCard from '../Components/ServiceCard';
 
 const Services = () => {
     const [services, setServices] = useState([]);
-    // const { data } = axios.get(`${import.meta.env.VITE_API_URL}/services`);
-    // console.log(data);
+    console.log(services);
 
     useEffect(() => {
         fetchAll();
-        // console.log(services)
     }, [])
 
     const fetchAll = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/services`);
         setServices(data);
     }
-
 
     return (
         <div className='p-10 space-y-10' >
