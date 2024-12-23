@@ -89,7 +89,7 @@ const CardDetails = () => {
                 <div>
                     <div className="flex w-full flex-col">
                       <div className="divider">
-                        <h3 className="font-semibold text-lg" >All Reviews of this Services</h3>
+                        <h3 className="font-semibold text-lg" >All Reviews of this Services({reviews.length})</h3>
                       </div>
                     </div>
                     <div className="flex flex-col gap-3" >

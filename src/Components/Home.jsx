@@ -1,4 +1,6 @@
 import Banner from "./Banner";
+import ChooseUs from "./ChooseUs";
+import Faq from "./Faq";
 import Features from "./Features";
 import MeetPartners from "./MeetPartners";
 
@@ -12,8 +14,10 @@ const Home = () => {
             <Features></Features>
             {/* meet out partners */}
             <MeetPartners></MeetPartners>
-            {/* two more releavent section */}
-            
+            {/* choose us */}
+            <ChooseUs></ChooseUs>
+            {/* faq section */}
+            <Faq></Faq>
         </div>
     );
 };
