@@ -76,9 +76,15 @@ const Services = () => {
 
 
 
-            <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ' >
+            <div className='max-w-5xl mx-auto grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ' >
                 {
-                    services.length > 0 ? services.map(service => <ServiceCard key={service._id} service={service} ></ServiceCard>) : <div className='flex justify-center items-center col-span-3' ><Loading></Loading></div>
+                    services.length > 0 
+                    ? (services.map(service => <ServiceCard key={service._id} service={service} ></ServiceCard>))
+                    : search || filter ? (
+                      <div className="col-span-3 font-semibold text-xl text-center text-gray-500">
+                          No results found for your search.
+                      </div>)
+                    : <div className='flex justify-center items-center col-span-3' ><Loading></Loading></div>
                 }
             </div>
         </div>

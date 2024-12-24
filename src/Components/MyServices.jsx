@@ -16,6 +16,7 @@ const MyServices = () => {
     const [editService, setEditService] = useState([]);
     const [serviceId, setServiceId] = useState(null);
     const { user } = useContext(AuthContext);
+    const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
         fetchAll();
@@ -26,9 +27,10 @@ const MyServices = () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`);
         setServices(data);
     }
-    
+
     const handleSearch = (e) => {
       const searchValue = e.target.value.toLowerCase(); 
+      setIsSearching(true);
 
       if(!searchValue){
         fetchAll();
@@ -101,7 +103,13 @@ const MyServices = () => {
            
             <div className="overflow-x-auto">
                {
-                services.length > 0 ? (
+                isSearching && services.length === 0 
+                ? (
+                  <div className="col-span-3 font-semibold text-xl text-center text-gray-500">
+                    No results found for your search.
+                  </div>
+                )
+                : services.length > 0 ? (
                   <table className="table">
                   {/* head */}
                   <thead>
