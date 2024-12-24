@@ -4,11 +4,7 @@ import ServiceCard from "./ServiceCard";
 
  
 const Features = () => {
-    //featured-service
-
     const [services, setServices] = useState([]);
-    // const { data } = axios.get(`${import.meta.env.VITE_API_URL}/services`);
-    // console.log(data);
 
     useEffect(() => {
         fetchAll();

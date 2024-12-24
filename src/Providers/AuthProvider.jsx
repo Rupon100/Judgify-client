@@ -1,14 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import { auth } from './../Firebase/firebase.config';
 import {  createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
-
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+   
     const createUser = (email, password) => {
       setLoading(true)
       return createUserWithEmailAndPassword(auth, email, password)
@@ -37,42 +37,20 @@ const AuthProvider = ({ children }) => {
       })
     }
 
-    // // onAuthStateChange
-    // useEffect(() => {
-    //   const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-    //     console.log('CurrentUser email-->', currentUser?.email);
-    //     if(currentUser?.email){
-    //       setUser(currentUser);
-    //       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {
-    //           email: currentUser?.email
-    //       },
-    //       {withCredentials: true}
-    //      ) 
-    //     }else{
-    //       setUser(currentUser);
-
-    //       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/logout`,
-    //        {withCredentials: true}import { auth } from './../firebase/firebase.config';
-
-    //       ) 
-
-    //     }
-        
-    //     setLoading(false)
-        
-    //   })
-    //   return () => {
-    //     return unsubscribe()
-    //   }
-    // }, [])
-
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if(currentUser){
-                setUser(currentUser)
+              setUser(currentUser);
+
+
+              if(currentUser?.email){
+                const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {email: currentUser?.email});
+              }
+
+
+
             }else{
-                setUser(null);
-                // setLoading(true)
+              setUser(null);
             }
             setLoading(false)
         })
@@ -90,7 +68,7 @@ const AuthProvider = ({ children }) => {
       signIn,
       signInWithGoogle,
       logOut,
-      updateUserProfile
+      updateUserProfile,
     }
 
 

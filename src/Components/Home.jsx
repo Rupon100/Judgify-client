@@ -1,5 +1,6 @@
 import Banner from "./Banner";
 import ChooseUs from "./ChooseUs";
+import CountUpp from "./CountUpp";
 import Faq from "./Faq";
 import Features from "./Features";
 import MeetPartners from "./MeetPartners";
@@ -39,6 +40,8 @@ const Home = () => {
 
             {/* banenr swiper js */}
             <Banner></Banner>
+            {/* countup */}
+            <CountUpp></CountUpp>
             {/* featured section */}
             <Features></Features>
             {/* meet out partners */}

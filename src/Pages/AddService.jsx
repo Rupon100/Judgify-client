@@ -10,18 +10,15 @@ const AddService = () => {
 
     const { user } = useContext(AuthContext);
     const currentDate = new Date().toISOString().split('T')[0];
-    console.log(currentDate);
 
     const addService = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const dataInfo = Object.fromEntries(formData.entries());
-        console.log(dataInfo);
 
         // post data
         try{
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-service`, dataInfo);
-            // console.log(data);
             toast.success('Service Added Successfully!');
         }catch(err){
             toast.error(`${err}`);

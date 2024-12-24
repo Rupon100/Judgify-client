@@ -27,14 +27,12 @@ const MyServices = () => {
 
     const handleSearch = (e) => {
       const searchValue = e.target.value.toLowerCase(); 
-      console.log(searchValue)
 
       if(!searchValue){
         fetchAll();
       }else {
         const filter = services.filter(service => service.title.includes(searchValue));
         setServices(filter)
-        console.log(filter)
       }
 
     }
@@ -42,7 +40,6 @@ const MyServices = () => {
   
     // edit service
     const handleEdit = async (id) => {
-        console.log(id);
         setServiceId(id);
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-service/${id}`);
         setEditService(data[0])
@@ -55,7 +52,6 @@ const MyServices = () => {
 
         try{
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
-            console.log(data);
             fetchAll();
             document.getElementById('my_modal_4').close();
             return toast.success('Update Successfully!');
@@ -76,7 +72,6 @@ const MyServices = () => {
         }).then(async (result) => {
           if (result.isConfirmed) {
             const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/delete-servie/${id}`);
-            console.log(data)
             if (data.deletedCount) {
               Swal.fire("Deleted!", "Your service has been deleted.", "success");
               fetchAll(); 

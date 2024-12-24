@@ -22,7 +22,6 @@ const CardDetails = () => {
 
     const fetchAll = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviewss/${id}`);
-        // console.log('specific review' ,data);
         setReviews(data);
     }
 
@@ -36,13 +35,13 @@ const CardDetails = () => {
         const userEmail = user?.email;
         const userName  = user?.displayName;
         const photo = user?.photoURL;
-        console.log(title);
+       
 
         const review = { id, message, date, rtng, userEmail, userName, photo, title};
-        // console.log(review)
+       
 
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-review`, review);
-        // console.log(data);
+        
         if(data.insertedId){
             fetchAll();
             form.reset();

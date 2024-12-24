@@ -16,16 +16,12 @@ const Login = () => {
         const email = form.email.value;
         const pass = form.pass.value;
 
-        const newUser = { email, pass }
-        console.log(newUser);
-
         signIn(email, pass)
         .then(data => {
-          toast.success('Logged in successfull!')
-          console.log(data.user);
+          navigate('/');
+          toast.success('Logged in successfull!');
         })
         .catch(error =>{
-            // console.log(error.message);
             toast.error(`${error.message}`);
         }) 
     }
@@ -33,9 +29,9 @@ const Login = () => {
     const handleGoogle = () => {
         signInWithGoogle()
         .then(data => {
+            console.log(data)
             toast.success('Logged in successfull!');
             navigate('/');
-            console.log(data.user)
         })
     }
 

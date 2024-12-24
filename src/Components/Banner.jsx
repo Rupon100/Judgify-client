@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import Slide1 from '../Slider/Slide1';
 import Slide2 from '../Slider/Slide2';
 import Slide3 from '../Slider/Slide3';
+import Slide4 from '../Slider/Slide4';
 
 
 const Banner = () => {
@@ -25,6 +26,9 @@ const Banner = () => {
             modules={[Pagination, Autoplay, Navigation]}
             className="mySwiper"
           >
+            <SwiperSlide>
+              <Slide4></Slide4>  
+            </SwiperSlide>
             <SwiperSlide>
               <Slide2></Slide2>  
             </SwiperSlide>

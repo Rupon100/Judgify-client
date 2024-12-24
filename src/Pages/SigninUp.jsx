@@ -21,19 +21,18 @@ const SigninUp = () => {
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
         if(!passwordRegex.test(pass)){
-            // return hot TransformStream;
             return toast.error('Password needs 1 uppercase, 1 lowercase, and 1 number');
         }
 
-        const newUser = { name, email, photo, pass }
-        console.log(newUser)
+
+      
 
         createUser(email, pass)
         .then(data => {
             updateUserProfile(name, photo);
             toast.success('Register Successfull!');
             navigate('/');
-            console.log(data.user)
+ 
         })
 
     }

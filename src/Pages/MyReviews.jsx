@@ -14,6 +14,7 @@ const MyReviews = () => {
     const { user } = useContext(AuthContext);
     const [rating, setRating] = useState(0);
     const [selectedReviewId, setSelectedReviewId] = useState(null);
+    const [temporaryRating, setTemporaryRating] = useState(null);
 
     useEffect(() => {
         fetchAll();
@@ -34,7 +35,7 @@ const MyReviews = () => {
         
         try{
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/reviews/${selectedReviewId}`, updateInfo);
-            console.log(data);
+          
             fetchAll();
             document.getElementById('my_modal_4').close();
             return toast.success('Update Successfully!');
@@ -56,7 +57,7 @@ const MyReviews = () => {
             }).then(async (result) => {
               if (result.isConfirmed) {
                 const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
-                console.log(data)
+              
                 if (data.deletedCount) {
                   Swal.fire("Deleted!", "Your service has been deleted.", "success");
                   fetchAll(); 
@@ -120,8 +121,12 @@ const MyReviews = () => {
                                                <label>Rating: </label>
                                                <Rating
                                                  style={{ maxWidth: 180 }}
-                                                 value={rating}
-                                                 onChange={setRating}
+                                                 value={temporaryRating ?? review.rtng}
+                                                 onChange={(value) =>{
+                                                  setTemporaryRating(value);
+                                                  setRating(value);
+                                                 }
+                                                 }
                                                  required
                                                />
                                             </div>

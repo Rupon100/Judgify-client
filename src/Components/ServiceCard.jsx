@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 
 const ServiceCard = ({ service }) => {
     const { _id ,service_image , title, description, category, price } = service || {};
-    // console.log(service_image,)
-    
-    // const handleDetails = async (_id) => {
-    //     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/${_id}`);
-    // }
-    // onClick={handleDetails}
 
     return (
         <div>
