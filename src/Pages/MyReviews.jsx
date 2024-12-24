@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { Helmet } from "react-helmet";
+import Loading from "../Components/Loading";
+import { useQuery } from "@tanstack/react-query";
 
 const MyReviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -24,6 +26,21 @@ const MyReviews = () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${user?.email}`);
         setReviews(data);
     }
+
+
+
+
+    // const {data: reviews , isLoading} = useQuery({ queryKey: ['my-reviews'], queryFn: async() => {  
+    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${user?.email}`);
+    //   return data;
+    // } })
+      
+    // if(isLoading){
+    //   return <Loading></Loading>;
+    // }
+
+    
+
 
     const handleEdit = async(e) => {
         e.preventDefault();
@@ -48,7 +65,7 @@ const MyReviews = () => {
     const handleDelete = async (id) => {
         try{
             Swal.fire({
-              title: "Are you sure you want to delete this service?",
+              title: "Are you sure you want to delete review?",
               text: "You won't be able to revert this!",
               icon: "warning",
               showCancelButton: true,
@@ -79,6 +96,7 @@ const MyReviews = () => {
             <h2 className="font-semibold text-2xl text-center">Your Reviews</h2>
             <div className="grid grid-cols-1 w-full " >
                 {
+                    reviews.length > 0 ?   
                     reviews.map(review => (
                         <div className=" flex justify-between items-center border rounded-lg mb-3 px-4 py-2  bg-gray-900 cursor-pointer hover:bg-gray-800 text-white" key={review._id} >
                             <div className="space-y-2" >
@@ -148,6 +166,10 @@ const MyReviews = () => {
                             </dialog>
                         </div>
                     ))
+                    : <div className="flex justify-center items-center min-h-[200px] w-full">
+                        <Loading />
+                      </div>
+                     
                 }
 
               

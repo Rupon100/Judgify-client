@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { Helmet } from "react-helmet";
+import Loading from "./Loading";
+import { useQuery } from "@tanstack/react-query";
 
 
 const MyServices = () => {
@@ -24,7 +26,7 @@ const MyServices = () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`);
         setServices(data);
     }
-
+    
     const handleSearch = (e) => {
       const searchValue = e.target.value.toLowerCase(); 
 
@@ -49,7 +51,6 @@ const MyServices = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const dataInfo = Object.fromEntries(formData.entries());
-
         try{
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
             fetchAll();
@@ -99,45 +100,54 @@ const MyServices = () => {
             </div>
            
             <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Company</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            services.map((service,i) => (
-                                <tr key={service._id} >
-                                   <th>{i+1}</th>
-                                   <td>{service.company}</td>
-                                   <td>{service.title}</td>
-                                   <td>{service.description.slice(0,7)}...</td> 
-                                   <td>{service.category}</td>
-                                   <td>{service.price}</td>
-                                   {/* edit button */}
-                                   <td>
-                                      {/* <button className="btn" onClick={()=>document.getElementById('my_modal_4').showModal()}>open modal</button> */}
-                                      <button onClick={() => {
-                                        handleEdit(service._id);
-                                        document.getElementById('my_modal_4').showModal()
-                                      }} >
-                                        <FaEdit />
-                                      </button>
-                                    </td>
-                                   {/* delete button */}
-                                   <td><button onClick={() => handleDelt(service._id)} ><FaRegTrashAlt /></button></td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
+               {
+                services.length > 0 ? (
+                  <table className="table">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Company</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {
+                          services.map((service,i) => (
+                              <tr key={service._id} >
+                                 <th>{i+1}</th>
+                                 <td>{service.company}</td>
+                                 <td>{service.title}</td>
+                                 <td>{service.description.slice(0,7)}...</td> 
+                                 <td>{service.category}</td>
+                                 <td>{service.price}</td>
+                                 {/* edit button */}
+                                 <td>
+                                    {/* <button className="btn" onClick={()=>document.getElementById('my_modal_4').showModal()}>open modal</button> */}
+                                    <button onClick={() => {
+                                      handleEdit(service._id);
+                                      document.getElementById('my_modal_4').showModal()
+                                    }} >
+                                      <FaEdit />
+                                    </button>
+                                  </td>
+                                 {/* delete button */}
+                                 <td><button onClick={() => handleDelt(service._id)} ><FaRegTrashAlt /></button></td>
+                              </tr>
+                          ))
+                      }
+                  </tbody>
                   </table>
+                ) 
+                : (
+                  <div className="flex justify-center items-center min-h-[200px] w-full">
+                    <Loading />
+                  </div>
+                ) 
+               }
             </div>
             
             <dialog id="my_modal_4" className="modal">

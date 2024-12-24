@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import ServiceCard from '../Components/ServiceCard';
 import {Helmet} from "react-helmet";
 import { CiSearch } from "react-icons/ci";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Loading from '../Components/Loading';
 
 const Services = () => {
     const [services, setServices] = useState([]);
@@ -17,6 +19,19 @@ const Services = () => {
         }
         fetchAll();
     }, [filter, search])
+
+
+
+    // const {data: services , isLoading} = useQuery({ queryKey: ['services', search, filter], queryFn: async() => {
+
+    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/services?search=${search}&filter=${filter}`);
+    //   return data;
+    // } })
+    // if(isLoading){
+    //   return <Loading></Loading>;
+    // }
+
+     
 
 
     return (
@@ -61,9 +76,9 @@ const Services = () => {
 
 
 
-            <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3' >
+            <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ' >
                 {
-                    services ? services.map(service => <ServiceCard key={service._id} service={service} ></ServiceCard>) : <h2>No Data Found!</h2>
+                    services.length > 0 ? services.map(service => <ServiceCard key={service._id} service={service} ></ServiceCard>) : <div className='flex justify-center items-center col-span-3' ><Loading></Loading></div>
                 }
             </div>
         </div>

@@ -29,7 +29,6 @@ const Login = () => {
     const handleGoogle = () => {
         signInWithGoogle()
         .then(data => {
-            console.log(data)
             toast.success('Logged in successfull!');
             navigate('/');
         })
