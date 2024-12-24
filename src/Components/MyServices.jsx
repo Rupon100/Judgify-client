@@ -160,7 +160,7 @@ const MyServices = () => {
             
             <dialog id="my_modal_4" className="modal">
               <div className="modal-box w-11/12 max-w-5xl flex flex-col justify-center items-center overflow-y-auto ">
-                <div className="w-full">
+                <div className="w-full h-[600px] mt-20 lg:mt-0">
                     <div className="card bg-base-100 w-full shrink-0" >
                         <form onSubmit={handleUpdateService} className="card-body">
                           <div className="form-control">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CountUp from 'react-countup';
+import { useCountUp } from 'react-countup';
 
 const CountUpp = () => {
     const [reviewsCount, setReviewsCount] = useState(0);
@@ -20,19 +21,24 @@ const CountUpp = () => {
         setTotlaUsers(users.data.result);
     }
 
+
     return (
         <div className="w-full p-10 bg-gray-800 flex flex-col md:flex-row justify-around items-center gap-4 text-white">
             <div className="text-center" >
                 <h3>Total Users</h3>
+
                 <div className="font-semibold text-2xl">
-                    <CountUp start={0} end={totalUsers} delay={1}>
+                    
+                    <CountUp start={0} end={totalUsers} delay={0} >
                       {({ countUpRef }) => (
                         <div>
                           <span ref={countUpRef} />
                         </div>
                       )}
                     </CountUp>
+                   
                 </div>
+
             </div>
             <div className="text-center" >
                 <h3>Total Reviews</h3>
