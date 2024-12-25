@@ -39,25 +39,25 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if(currentUser){
-              setUser(currentUser);
+          setUser(currentUser);
+          console.log('user: ',currentUser);
+          
+          if(currentUser?.email){
+            await axios.post(`${import.meta.env.VITE_API_URL}/users`, {email: currentUser?.email});
+          }else{
+            setUser(currentUser);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/logout`,
+              {withCredentials: true}
+            ) 
+          }
 
-
-              if(currentUser?.email){
-                const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {email: currentUser?.email});
-              }
-
-
-
-            }else{
-              setUser(null);
-            }
-            setLoading(false)
+          setLoading(false)
         })
         return () => {
             unsubscribe();
         }
     },[])
+
 
     const authInfo = {
       user,

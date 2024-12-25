@@ -3,11 +3,12 @@ import { AuthContext } from './../Providers/AuthProvider';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
+import useAxios from "../Hooks/UseAxiosSecure";
 
  
 
 const AddService = () => {
-
+    const axiosSecure = useAxios();
     const { user } = useContext(AuthContext);
     const currentDate = new Date().toISOString().split('T')[0];
 
@@ -18,7 +19,7 @@ const AddService = () => {
 
         // post data
         try{
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-service`, dataInfo);
+            const { data } = await axiosSecure.post(`${import.meta.env.VITE_API_URL}/add-service`, dataInfo);
             toast.success('Service Added Successfully!');
         }catch(err){
             toast.error(`${err}`);

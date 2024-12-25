@@ -7,8 +7,10 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../Providers/AuthProvider";
 import ReviewCard from "./ReviewCard";
 import { Helmet } from "react-helmet";
+import useAxios from "../Hooks/UseAxiosSecure";
 
 const CardDetails = () => {
+    const axiosSecure = useAxios();
     const { user } = useContext(AuthContext);
     const currentDate = new Date().toISOString().split('T')[0];
     const [rating, setRating] = useState(0);
@@ -21,11 +23,11 @@ const CardDetails = () => {
     }, []);
 
     const fetchAll = async () => {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviewss/${id}`);
+        const { data } = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/reviewss/${id}`);
         setReviews(data);
     }
 
-    const {category, company, date, description, email, price, service_image, title, website} = loadedData || {};
+    const {category, company, description, email, price, service_image, title, website} = loadedData || {};
     const handleReviewAdd = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -40,13 +42,20 @@ const CardDetails = () => {
         const review = { id, message, date, rtng, userEmail, userName, photo, title};
        
 
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-review`, review);
-        
-        if(data.insertedId){
-            fetchAll();
-            form.reset();
-            return toast.success("Review Added!");
+        try{
+            const { data } = await axiosSecure.post(`${import.meta.env.VITE_API_URL}/add-review`, review);
+            if(data.insertedId){
+                fetchAll();
+                form.reset();
+                return toast.success("Review Added!");
+            }
+
+        } catch(err){
+            return toast.error(`can't add review ;)`)
+
         }
+        
+        
 
     }
 

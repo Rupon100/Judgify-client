@@ -4,6 +4,7 @@ import login from '../assets/Lottie/signin.json';
 import { useContext } from 'react';
 import { AuthContext } from '../Providers/AuthProvider';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 
 const Login = () => {
@@ -17,7 +18,13 @@ const Login = () => {
         const pass = form.pass.value;
 
         signIn(email, pass)
-        .then(data => {
+        .then(result => {
+
+
+          const {data} = axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {email: result.user.email}, {
+            withCredentials: true
+          })
+
           navigate('/');
           toast.success('Logged in successfull!');
         })
@@ -27,10 +34,17 @@ const Login = () => {
     }
 
     const handleGoogle = () => {
-        signInWithGoogle()
-        .then(data => {
-            toast.success('Logged in successfull!');
-            navigate('/');
+         signInWithGoogle()
+        .then(restlt => {
+
+
+          const {data} = axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {email: restlt.user.email}, {
+            withCredentials: true
+          })
+           
+
+          toast.success('Logged in successfull!');
+          navigate('/');
         })
     }
 

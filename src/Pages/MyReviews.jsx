@@ -10,36 +10,34 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { Helmet } from "react-helmet";
 import Loading from "../Components/Loading";
 import { useQuery } from "@tanstack/react-query";
+import useAxios, { axiosInstance } from "../Hooks/UseAxiosSecure";
 
 const MyReviews = () => {
+    const axiosSecure = useAxios();
     const [reviews, setReviews] = useState([]);
     const { user } = useContext(AuthContext);
     const [rating, setRating] = useState(0);
     const [selectedReviewId, setSelectedReviewId] = useState(null);
     const [temporaryRating, setTemporaryRating] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchAll();
     }, []);
+ 
 
     const fetchAll = async () => {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${user?.email}`);
-        setReviews(data);
-    }
-
-
-
-
-    // const {data: reviews , isLoading} = useQuery({ queryKey: ['my-reviews'], queryFn: async() => {  
-    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${user?.email}`);
-    //   return data;
-    // } })
-      
-    // if(isLoading){
-    //   return <Loading></Loading>;
-    // }
-
-    
+      setIsLoading(true);
+      try {
+          const { data } = await axiosSecure.get(`/reviews/${user?.email}`)
+          setReviews(data);
+      } catch (err) {
+          setReviews([]);  
+      } finally {
+          setIsLoading(false);  
+      }
+    };
+  
 
 
     const handleEdit = async(e) => {
@@ -51,13 +49,13 @@ const MyReviews = () => {
         const updateInfo = {message, editRating};
         
         try{
-            const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/reviews/${selectedReviewId}`, updateInfo);
+            const { data } = await axiosSecure.put(`${import.meta.env.VITE_API_URL}/reviews/${selectedReviewId}`, updateInfo);
           
             fetchAll();
             document.getElementById('my_modal_4').close();
             return toast.success('Update Successfully!');
         }catch(err){
-            toast.error(`${err}`);
+            toast.error(`can't update ;)`);
         }
         
     }
@@ -73,18 +71,18 @@ const MyReviews = () => {
               cancelButtonText: "No, cancel!",
             }).then(async (result) => {
               if (result.isConfirmed) {
-                const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
+                const { data } = await axiosSecure.delete(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
               
                 if (data.deletedCount) {
                   Swal.fire("Deleted!", "Your service has been deleted.", "success");
                   fetchAll(); 
                 } else {
-                  Swal.fire("Error", "Failed to delete the service.", "error");
+                  Swal.fire("Error", "Failed to delete the service.");
                 }
               } 
             });
           }catch(err){
-            toast(`${err}`)
+            toast.error(`can't delete ;)`)
           }
     }
 
@@ -96,7 +94,16 @@ const MyReviews = () => {
             <h2 className="font-semibold text-2xl text-center">Your Reviews</h2>
             <div className="grid grid-cols-1 w-full " >
                 {
-                    reviews.length > 0 ?   
+                  isLoading ? (
+                    <div className="flex justify-center items-center min-h-[200px] w-full">
+                        <Loading />
+                    </div>
+                ) : reviews.length === 0 ?
+                (
+                 <div className="col-span-3 font-semibold text-xl text-center text-gray-500">
+                   No Data Found.
+                 </div>
+                ) :
                     reviews.map(review => (
                         <div className=" flex justify-between items-center border rounded-lg mb-3 px-4 py-2  bg-gray-900 cursor-pointer hover:bg-gray-800 text-white" key={review._id} >
                             <div className="space-y-2" >
@@ -165,11 +172,7 @@ const MyReviews = () => {
                                 </div>
                             </dialog>
                         </div>
-                    ))
-                    : <div className="flex justify-center items-center min-h-[200px] w-full">
-                        <Loading />
-                      </div>
-                     
+                    )) 
                 }
 
               

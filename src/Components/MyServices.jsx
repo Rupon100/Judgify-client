@@ -8,25 +8,49 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { Helmet } from "react-helmet";
 import Loading from "./Loading";
-import { useQuery } from "@tanstack/react-query";
+import useAxios, { axiosInstance } from "../Hooks/UseAxiosSecure";
 
 
 const MyServices = () => {
+    const axiosSecure = useAxios(); 
     const [services, setServices] = useState([]);
     const [editService, setEditService] = useState([]);
     const [serviceId, setServiceId] = useState(null);
     const { user } = useContext(AuthContext);
     const [isSearching, setIsSearching] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchAll();
     }, [])
 
 
+    // const fetchAll = async () => {
+    //   setIsLoading(true);
+    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`, {
+    //     withCredentials: true
+    //   });
+    //   setServices(data);
+    // }
+
+
     const fetchAll = async () => {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`);
+      setIsLoading(true); 
+      try {
+        const { data } = await axiosSecure.get(`/my-services/?email=${user?.email}`,
+          {
+            withCredentials: true,
+          }
+        );
         setServices(data);
-    }
+      } catch (err) {
+        // toast.error("Failed to fetch services. Please try again!");
+      } finally {
+        setIsLoading(false);  
+      }
+    };
+
+    // console.log(services);
 
     const handleSearch = (e) => {
       const searchValue = e.target.value.toLowerCase(); 
@@ -54,12 +78,12 @@ const MyServices = () => {
         const formData = new FormData(e.target);
         const dataInfo = Object.fromEntries(formData.entries());
         try{
-            const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
+            const { data } = await axiosSecure.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
             fetchAll();
             document.getElementById('my_modal_4').close();
             return toast.success('Update Successfully!');
         }catch(err){
-            toast.error(`${err}`)
+            toast.error(`Sorry can't update ;)`)
         }
     }
 
@@ -74,12 +98,12 @@ const MyServices = () => {
           cancelButtonText: "No, cancel!",
         }).then(async (result) => {
           if (result.isConfirmed) {
-            const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/delete-servie/${id}`);
+            const { data } = await axiosSecure.delete(`${import.meta.env.VITE_API_URL}/delete-servie/${id}`);
             if (data.deletedCount) {
               Swal.fire("Deleted!", "Your service has been deleted.", "success");
               fetchAll(); 
             } else {
-              Swal.fire("Error", "Failed to delete the service.", "error");
+              Swal.fire("Error", "Failed to delete the service.");
             }
           } 
         });
@@ -103,13 +127,18 @@ const MyServices = () => {
            
             <div className="overflow-x-auto">
                {
-                isSearching && services.length === 0 
-                ? (
+                 isLoading ?  (
+                  <div className="flex justify-center items-center min-h-[200px] w-full">
+                    <Loading />
+                  </div>
+                ) :
+                 services.length === 0 ?
+                 (
                   <div className="col-span-3 font-semibold text-xl text-center text-gray-500">
-                    No results found for your search.
+                    No Data Found.
                   </div>
                 )
-                : services.length > 0 ? (
+                :  (
                   <table className="table">
                   {/* head */}
                   <thead>
@@ -150,11 +179,7 @@ const MyServices = () => {
                   </tbody>
                   </table>
                 ) 
-                : (
-                  <div className="flex justify-center items-center min-h-[200px] w-full">
-                    <Loading />
-                  </div>
-                ) 
+               
                }
             </div>
             
