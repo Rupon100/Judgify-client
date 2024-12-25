@@ -2,7 +2,6 @@ import { useLoaderData, useParams } from "react-router-dom";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../Providers/AuthProvider";
 import ReviewCard from "./ReviewCard";
@@ -52,7 +51,6 @@ const CardDetails = () => {
 
         } catch(err){
             return toast.error(`can't add review ;)`)
-
         }
         
         

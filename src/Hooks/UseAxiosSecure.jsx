@@ -17,7 +17,6 @@ const useAxios = () => {
         axiosInstance.interceptors.response.use(res => {
             return res;
         }, async err => {
-            console.log('erro cautht from our very own axios', err.response);
             if(err.response.status === 401 || err.response.status === 403){
                 logOut();
                 navigate('/login');

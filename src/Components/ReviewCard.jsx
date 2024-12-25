@@ -7,7 +7,6 @@ const ReviewCard = ({ review }) => {
 
     return (
         <div className="bg-gray-700 hover:bg-gray-800 cursor-pointer p-3 rounded-md text-white space-y-2" >
-            {/* <p>'{message}'</p> */}
             <p className="text-sm text-gray-300" >{`"${message}"`}</p>
             <p>Rating: {rtng}.0</p>
             <div className="flex items-center gap-2" >

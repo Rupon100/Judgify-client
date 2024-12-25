@@ -12,6 +12,7 @@ import UseAvater from "../Pages/UseAvater";
 import PrivateRoute from "./PrivateRoute";
 import MyServices from "../Components/MyServices";
 import CardDetails from "../Components/CardDetails";
+import useAxios from "../Hooks/UseAxiosSecure"; 
 
 const Router = createBrowserRouter([
     {

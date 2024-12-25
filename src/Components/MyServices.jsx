@@ -24,16 +24,6 @@ const MyServices = () => {
         fetchAll();
     }, [])
 
-
-    // const fetchAll = async () => {
-    //   setIsLoading(true);
-    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-services/?email=${user?.email}`, {
-    //     withCredentials: true
-    //   });
-    //   setServices(data);
-    // }
-
-
     const fetchAll = async () => {
       setIsLoading(true); 
       try {
@@ -50,7 +40,6 @@ const MyServices = () => {
       }
     };
 
-    // console.log(services);
 
     const handleSearch = (e) => {
       const searchValue = e.target.value.toLowerCase(); 
@@ -69,7 +58,7 @@ const MyServices = () => {
     // edit service
     const handleEdit = async (id) => {
         setServiceId(id);
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/my-service/${id}`);
+        const { data } = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/my-service/${id}`);
         setEditService(data[0])
     }
     

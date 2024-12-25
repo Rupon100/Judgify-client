@@ -28,9 +28,9 @@ const Home = () => {
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: 6,
+                    height: 10,
                     originX: 0,
-                    backgroundColor: "#333634",
+                    backgroundColor: "#325e63",
                 }}
             />
 

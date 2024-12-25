@@ -22,7 +22,7 @@ const AddService = () => {
             const { data } = await axiosSecure.post(`${import.meta.env.VITE_API_URL}/add-service`, dataInfo);
             toast.success('Service Added Successfully!');
         }catch(err){
-            toast.error(`${err}`);
+            toast.error(`can't add review ;)`);
         }
     }
 
