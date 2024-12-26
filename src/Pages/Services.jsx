@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import ServiceCard from '../Components/ServiceCard';
 import {Helmet} from "react-helmet";
 import { CiSearch } from "react-icons/ci";
-import { useMutation, useQuery } from '@tanstack/react-query';
 import Loading from '../Components/Loading';
 
 const Services = () => {
@@ -11,6 +10,7 @@ const Services = () => {
     const [filter, setFilter] = useState('');
     const [search, setSearch] = useState('');
    
+    
 
     useEffect(() => {
         const fetchAll = async () => {
@@ -20,16 +20,6 @@ const Services = () => {
         fetchAll();
     }, [filter, search])
 
-
-
-    // const {data: services , isLoading} = useQuery({ queryKey: ['services', search, filter], queryFn: async() => {
-
-    //   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/services?search=${search}&filter=${filter}`);
-    //   return data;
-    // } })
-    // if(isLoading){
-    //   return <Loading></Loading>;
-    // }
 
      
 
