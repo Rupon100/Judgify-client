@@ -19,6 +19,7 @@ const MyServices = () => {
     const { user } = useContext(AuthContext);
     const [isSearching, setIsSearching] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [upid, setUpId] = useState(null);
 
     useEffect(() => {
         fetchAll();
@@ -57,6 +58,8 @@ const MyServices = () => {
   
     // edit service
     const handleEdit = async (id) => {
+        setUpId(id);
+        setEditService(null);
         setServiceId(id);
         const { data } = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/my-service/${id}`);
         setEditService(data[0])
@@ -66,15 +69,20 @@ const MyServices = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const dataInfo = Object.fromEntries(formData.entries());
+
+
         try{
             const { data } = await axiosSecure.put(`${import.meta.env.VITE_API_URL}/update-service/${serviceId}`, dataInfo);
             fetchAll();
-            document.getElementById('my_modal_4').close();
+            setEditService(null);
+            document.getElementById(`my_modal_${upid}`).close();
             return toast.success('Update Successfully!');
         }catch(err){
             toast.error(`Sorry can't update ;)`)
         }
     }
+
+ 
 
     const handleDelt = async (id) => {
       try{
@@ -155,13 +163,93 @@ const MyServices = () => {
                                     {/* <button className="btn" onClick={()=>document.getElementById('my_modal_4').showModal()}>open modal</button> */}
                                     <button onClick={() => {
                                       handleEdit(service._id);
-                                      document.getElementById('my_modal_4').showModal()
+                                      document.getElementById(`my_modal_${service._id}`).showModal()
                                     }} >
                                       <FaEdit />
                                     </button>
                                   </td>
                                  {/* delete button */}
                                  <td><button onClick={() => handleDelt(service._id)} ><FaRegTrashAlt /></button></td>
+
+                                 <dialog id={`my_modal_${service._id}`} className="modal">
+                                      <div className="modal-box w-11/12 max-w-5xl flex flex-col justify-center items-center overflow-y-auto ">
+                                        <div className="w-full h-[600px] mt-20 lg:mt-0">
+                                            <div className="card bg-base-100 w-full shrink-0" >
+                                                <form onSubmit={handleUpdateService} className="card-body">
+                                                  <div className="form-control">
+                                                    <label className="label">
+                                                      <span className="label-text">Service Image</span>
+                                                    </label>
+                                                    <input type="text" defaultValue={editService?.service_image} placeholder="service image" name="service_image" className="input input-bordered" required />
+                                                  </div>
+                                                  <div className="form-control">
+                                                    <label className="label">
+                                                      <span className="label-text">Title</span>
+                                                    </label>
+                                                    <input type="text" defaultValue={editService?.title} disabled placeholder="title" name="title" className="input input-bordered" required />
+                                                  </div>
+                                                  <div className="form-control">
+                                                    <label className="label">
+                                                      <span className="label-text">Company Name</span>
+                                                    </label>
+                                                    <input type="text" defaultValue={editService?.company} placeholder="Company" name="company" className="input input-bordered" required />
+                                                  </div>
+                                                  <div className="form-control">
+                                                    <label className="label">
+                                                      <span className="label-text">Website</span>
+                                                    </label>
+                                                    <input type="url" defaultValue={editService?.website} placeholder="website" name="website" className="input input-bordered" required />
+                                                  </div>
+                                                  <div className="form-control">
+                                                    <label className="label">
+                                                      <span className="label-text">Description</span>
+                                                    </label>
+                                                    <input type="text" defaultValue={editService?.description} placeholder="description" name="description" className="input input-bordered" required />
+                                                  </div>
+                                                  <div className="flex gap-4 flex-col md:flex-row" >
+                                                        <div className="form-control md:w-1/2 ">
+                                                          <label className="label">
+                                                            <span className="label-text">Category</span>
+                                                          </label>
+                                                          <input type="text" defaultValue={editService?.category} placeholder="category" name="category" className="input input-bordered" required />
+                                                        </div>
+                                                        <div className="form-control md:w-1/2 ">
+                                                          <label className="label">
+                                                            <span className="label-text">Price</span>
+                                                          </label>
+                                                          <input type="number" defaultValue={editService?.price} placeholder="price" name="price" className="input input-bordered" required />
+                                                        </div>
+                                                  </div>
+                                                  <div className="flex gap-4 flex-col md:flex-row" >
+                                                        <div className="form-control md:w-1/2 ">
+                                                          <label className="label">
+                                                            <span className="label-text">Date</span>
+                                                          </label>
+                                                          <input type="date" defaultValue={editService?.date}  placeholder="date" name="date" className="input input-bordered" required />
+                                                        </div>
+                                                        <div className="form-control md:w-1/2 ">
+                                                          <label className="label">
+                                                            <span className="label-text">Email</span>
+                                                          </label>
+                                                          <input type="email" placeholder="email" defaultValue={user?.email} disabled  name="email" className="input input-bordered" required />
+                                                        </div>
+                                                  </div>
+                                                  <div className="form-control mt-6">
+                                                    <button  className="btn bg-gray-900 text-white hover:bg-gray-800">Update</button>
+                                                    <div className="divider"></div>
+                                                    <div className="modal-action flex justify-center -mt-2 items-center w-full">
+                                                      <form method="dialog">
+                                                        <button className="btn btn-block bg-gray-900 text-white hover:bg-gray-800">Cancle</button>
+                                                      </form>
+                                                    </div>
+                                                    {/* <button type="button" className="btn bg-gray-900 text-white hover:bg-gray-800">Cancle</button> */}
+                                                  </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </dialog>
+
                               </tr>
                           ))
                       }
@@ -172,85 +260,6 @@ const MyServices = () => {
                }
             </div>
             
-            <dialog id="my_modal_4" className="modal">
-              <div className="modal-box w-11/12 max-w-5xl flex flex-col justify-center items-center overflow-y-auto ">
-                <div className="w-full h-[600px] mt-20 lg:mt-0">
-                    <div className="card bg-base-100 w-full shrink-0" >
-                        <form onSubmit={handleUpdateService} className="card-body">
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text">Service Image</span>
-                            </label>
-                            <input type="text" defaultValue={editService?.service_image} placeholder="service image" name="service_image" className="input input-bordered" required />
-                          </div>
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text">Title</span>
-                            </label>
-                            <input type="text" defaultValue={editService?.title} disabled placeholder="title" name="title" className="input input-bordered" required />
-                          </div>
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text">Company Name</span>
-                            </label>
-                            <input type="text" defaultValue={editService?.company} placeholder="Company" name="company" className="input input-bordered" required />
-                          </div>
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text">Website</span>
-                            </label>
-                            <input type="url" defaultValue={editService?.website} placeholder="website" name="website" className="input input-bordered" required />
-                          </div>
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text">Description</span>
-                            </label>
-                            <input type="text" defaultValue={editService?.description} placeholder="description" name="description" className="input input-bordered" required />
-                          </div>
-                          <div className="flex gap-4 flex-col md:flex-row" >
-                                <div className="form-control md:w-1/2 ">
-                                  <label className="label">
-                                    <span className="label-text">Category</span>
-                                  </label>
-                                  <input type="text" defaultValue={editService?.category} placeholder="category" name="category" className="input input-bordered" required />
-                                </div>
-                                <div className="form-control md:w-1/2 ">
-                                  <label className="label">
-                                    <span className="label-text">Price</span>
-                                  </label>
-                                  <input type="number" defaultValue={editService?.price} placeholder="price" name="price" className="input input-bordered" required />
-                                </div>
-                          </div>
-                          <div className="flex gap-4 flex-col md:flex-row" >
-                                <div className="form-control md:w-1/2 ">
-                                  <label className="label">
-                                    <span className="label-text">Date</span>
-                                  </label>
-                                  <input type="date" defaultValue={editService?.date}  placeholder="date" name="date" className="input input-bordered" required />
-                                </div>
-                                <div className="form-control md:w-1/2 ">
-                                  <label className="label">
-                                    <span className="label-text">Email</span>
-                                  </label>
-                                  <input type="email" placeholder="email" defaultValue={user?.email} disabled  name="email" className="input input-bordered" required />
-                                </div>
-                          </div>
-                          <div className="form-control mt-6">
-                            <button  className="btn bg-gray-900 text-white hover:bg-gray-800">Update</button>
-                            <div className="divider"></div>
-                            <div className="modal-action flex justify-center -mt-2 items-center w-full">
-                              <form method="dialog">
-                                <button className="btn btn-block bg-gray-900 text-white hover:bg-gray-800">Cancle</button>
-                              </form>
-                            </div>
-                            {/* <button type="button" className="btn bg-gray-900 text-white hover:bg-gray-800">Cancle</button> */}
-                          </div>
-                        </form>
-                    </div>
-                </div>
-              </div>
-            </dialog>
-
         </div>
     );
 };
