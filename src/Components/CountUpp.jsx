@@ -1,43 +1,19 @@
+ 
+
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import CountUp from "react-countup";
+import ScrollTrigger from 'react-scroll-trigger';
 
 const CountUpp = () => {
   const [reviewsCount, setReviewsCount] = useState(0);
   const [servicesCount, setServicesCount] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  const countUpRefs = useRef([]);
-
+  const [countOn, setCountOn] = useState(false);
+  
   useEffect(() => {
-
     fetchAll();
-
-    const handleScroll = () => {
-      if (!hasAnimated) {
-        const isInView = countUpRefs.current.some((ele) => {
-          if (!ele) return false;
-          const rect = ele.getBoundingClientRect();
-          return rect.top < window.innerHeight && rect.bottom > 0;
-        });
-        if (isInView) {
-          setHasAnimated(true);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    handleScroll();  
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-
-
-  }, [hasAnimated]);
-
+  }, [])
 
   const fetchAll = async () => {
     try {
@@ -55,49 +31,41 @@ const CountUpp = () => {
 
   return (
     <div className="w-full p-10 bg-gray-800 flex flex-col md:flex-row justify-around items-center gap-4 text-white">
-
-      <div
-        ref={(ele) => (countUpRefs.current[0] = ele)}
-        className="text-center border p-3 rounded"
-      >
-        <h3>Total Users</h3>
-        <div className="font-bold text-4xl">
-          {hasAnimated && (
-            <CountUp start={0} end={totalUsers} duration={2}>
-              {({ countUpRef }) => <span ref={countUpRef} />}
-            </CountUp>
-          )}
-        </div>
-      </div>
-
-      <div
-        ref={(ele) => (countUpRefs.current[1] = ele)}
-        className="text-center border p-3 rounded">
-        <h3>Total Reviews</h3>
-        <div className="font-bold text-4xl">
-          {hasAnimated && (
-            <CountUp start={0} end={reviewsCount} duration={2}>
-              {({ countUpRef }) => <span ref={countUpRef} />}
-            </CountUp>
-          )}
-        </div>
-      </div>
-
-      <div
-        ref={(ele) => (countUpRefs.current[2] = ele)}
-        className="text-center border p-3 rounded">
         
-        <h3>Total Services</h3>
-        <div className="font-bold text-4xl">
-          {hasAnimated && (
-            <CountUp start={0} end={servicesCount} duration={2}>
-              {({ countUpRef }) => <span ref={countUpRef} />}
-            </CountUp>
-          )}
+        <div className="flex flex-col items-center border p-4 rounded-lg">
+            <h3>Total Users</h3>
+            <div className="font-bold text-4xl">
+              <ScrollTrigger onEnter={() => setCountOn(true)} onExit={() => setCountOn(false)}>
+                {countOn && 
+                <CountUp start={0} end={totalUsers} duration={2} delay={0} ></CountUp>}
+              </ScrollTrigger>
+            </div>
         </div>
-      </div>
+
+        <div className="flex flex-col items-center border p-4 rounded-lg">
+            <h3>Total Reviews</h3>
+            <div className="font-bold text-4xl">
+              <ScrollTrigger onEnter={() => setCountOn(true)} onExit={() => setCountOn(false)}>
+                {countOn && 
+                <CountUp start={0} end={reviewsCount} duration={2} delay={0} ></CountUp>}
+              </ScrollTrigger>
+            </div>
+        </div>
+
+        <div className="flex flex-col items-center border p-4 rounded-lg">
+            <h3>Total Services</h3>
+            <div className="font-bold text-4xl">
+              <ScrollTrigger onEnter={() => setCountOn(true)} onExit={() => setCountOn(false)}>
+                {countOn && 
+                <CountUp start={0} end={servicesCount} duration={2} delay={0} ></CountUp>}
+              </ScrollTrigger>
+            </div>
+        </div>
+      
     </div>
   );
 };
 
 export default CountUpp;
+
+ 
