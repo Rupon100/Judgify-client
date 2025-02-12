@@ -1,4 +1,4 @@
-import review2 from '../assets/review-2.jpg';
+import review2 from '../assets/review-2-removebg-preview.png';
 
 const Slide2 = () => {
     return (

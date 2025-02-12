@@ -5,7 +5,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Slide1 from '../Slider/Slide1';
-import Slide2 from '../Slider/Slide2';
 import Slide3 from '../Slider/Slide3';
 import Slide4 from '../Slider/Slide4';
 
