@@ -100,7 +100,7 @@ const SigninUp = () => {
             </small>
           </div>
         </div>
-        <div>
+        <div className="hidden md:block" >
           <Lottie loop animationData={signup} play />
           {/* <img src={signup} alt="" /> */}
         </div>

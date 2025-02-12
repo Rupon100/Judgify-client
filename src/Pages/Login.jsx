@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center max-w-5xl mx-auto p-10">
-      <div className="flex flex-col-reverse md:flex-row justify-between items-center w-full h-full p-10 gap-4">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center w-full h-full p-1 gap-4">
         <div className="w-full">
           <div className="max-w-lg shadow-md dark:bg-gray-800 dark:text-white card  w-full shrink-0">
             <form onSubmit={handleSigninUser} className="card-body">
@@ -102,7 +102,7 @@ const Login = () => {
             </small>
           </div>
         </div>
-        <div>
+        <div className="hidden md:block" >
           <Lottie loop animationData={login} play />
         </div>
       </div>
