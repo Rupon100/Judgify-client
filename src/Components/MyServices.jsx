@@ -143,11 +143,11 @@ const MyServices = () => {
             <thead>
               <tr>
                 <th></th>
-                <th>Company</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Price</th>
+                <th className="dark:text-white" >Company</th>
+                <th className="dark:text-white" >Title</th>
+                <th className="dark:text-white" >Description</th>
+                <th className="dark:text-white" >Category</th>
+                <th className="dark:text-white" >Price</th>
               </tr>
             </thead>
             <tbody>
@@ -161,7 +161,6 @@ const MyServices = () => {
                   <td>{service.price}</td>
                   {/* edit button */}
                   <td>
-                    {/* <button className="btn" onClick={()=>document.getElementById('my_modal_4').showModal()}>open modal</button> */}
                     <button
                       onClick={() => {
                         handleEdit(service._id);
@@ -180,16 +179,16 @@ const MyServices = () => {
                     </button>
                   </td>
                   <dialog id={`my_modal_${service._id}`} className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl flex flex-col justify-center items-center overflow-y-auto ">
+                    <div className="modal-box w-11/12 max-w-5xl flex flex-col justify-center items-center overflow-y-auto dark:bg-gray-800 dark:text-white  ">
                       <div className="w-full h-[600px] mt-20 lg:mt-0">
-                        <div className="card bg-base-100 w-full shrink-0">
+                        <div className="card dark:bg-gray-800 dark:text-black  w-full shrink-0">
                           <form
                             onSubmit={handleUpdateService}
                             className="card-body"
                           >
                             <div className="form-control">
                               <label className="label">
-                                <span className="label-text">
+                                <span className="label-text dark:text-white">
                                   Service Image
                                 </span>
                               </label>
@@ -204,7 +203,7 @@ const MyServices = () => {
                             </div>
                             <div className="form-control">
                               <label className="label">
-                                <span className="label-text">Title</span>
+                                <span className="label-text dark:text-white">Title</span>
                               </label>
                               <input
                                 type="text"
@@ -218,7 +217,7 @@ const MyServices = () => {
                             </div>
                             <div className="form-control">
                               <label className="label">
-                                <span className="label-text">Company Name</span>
+                                <span className="label-text dark:text-white">Company Name</span>
                               </label>
                               <input
                                 type="text"
@@ -231,7 +230,7 @@ const MyServices = () => {
                             </div>
                             <div className="form-control">
                               <label className="label">
-                                <span className="label-text">Website</span>
+                                <span className="label-text dark:text-white">Website</span>
                               </label>
                               <input
                                 type="url"
@@ -244,7 +243,7 @@ const MyServices = () => {
                             </div>
                             <div className="form-control">
                               <label className="label">
-                                <span className="label-text">Description</span>
+                                <span className="label-text dark:text-white">Description</span>
                               </label>
                               <input
                                 type="text"
@@ -258,7 +257,7 @@ const MyServices = () => {
                             <div className="flex gap-4 flex-col md:flex-row">
                               <div className="form-control md:w-1/2 ">
                                 <label className="label">
-                                  <span className="label-text">Category</span>
+                                  <span className="label-text dark:text-white">Category</span>
                                 </label>
                                 <input
                                   type="text"
@@ -271,7 +270,7 @@ const MyServices = () => {
                               </div>
                               <div className="form-control md:w-1/2 ">
                                 <label className="label">
-                                  <span className="label-text">Price</span>
+                                  <span className="label-text dark:text-white">Price</span>
                                 </label>
                                 <input
                                   type="number"
@@ -286,7 +285,7 @@ const MyServices = () => {
                             <div className="flex gap-4 flex-col md:flex-row">
                               <div className="form-control md:w-1/2 ">
                                 <label className="label">
-                                  <span className="label-text">Date</span>
+                                  <span className="label-text dark:text-white">Date</span>
                                 </label>
                                 <input
                                   type="date"
@@ -299,7 +298,7 @@ const MyServices = () => {
                               </div>
                               <div className="form-control md:w-1/2 ">
                                 <label className="label">
-                                  <span className="label-text">Email</span>
+                                  <span className="label-text dark:text-white">Email</span>
                                 </label>
                                 <input
                                   type="email"
