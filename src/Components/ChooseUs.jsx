@@ -5,7 +5,7 @@ import support from '../assets/technical-support.png';
  
 const ChooseUs = () => {
     return (
-        <div className='bg-gray-100' >
+        <div className='bg-gray-100 dark:bg-gray-800' >
             <div className="max-w-5xl mx-auto p-4 py-10 m-4 my-10 flex flex-col justify-center items-center space-y-5" >
                 <div className="text-center space-y-2 max-w-2xl" >
                    <h3 className="font-semibold text-2xl text-center" >Why Choose Us?</h3>
