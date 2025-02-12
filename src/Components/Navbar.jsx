@@ -72,11 +72,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" bg-gray-900 text-white z-40 sticky top-0 left-0">
+    <div className=" bg-gray-900 text-white z-40 sticky top-0 left-0 dark:border-b dark:border-gray-700 dark:shadow-xl">
       <div className="navbar max-w-5xl mx-auto ">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div tabIndex={0} role="button" className="mx-4 lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -94,7 +94,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-black text-white rounded-box z-[10] space-y-3 mt-3 w-52 p-2 text-center "
+              className="menu menu-sm dropdown-content bg-gray-800 text-white dark:bg-gray-900 dark:border dark:border-gray-600 rounded-box z-[10] space-y-3 mt-3 w-52 p-2 text-center "
             >
               {links}
             </ul>

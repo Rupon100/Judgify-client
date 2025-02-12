@@ -79,7 +79,7 @@ const CardDetails = () => {
       <Helmet>
         <title>Judgify | Details</title>
       </Helmet>
-      <div className="max-w-5xl mx-auto p-4 m-4 flex flex-col gap-4 border">
+      <div className="max-w-5xl mx-auto p-4 m-4 flex flex-col gap-4">
         {/* details image */}
         <div>
           <img

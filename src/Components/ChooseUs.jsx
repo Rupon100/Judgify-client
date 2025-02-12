@@ -1,7 +1,6 @@
 import freedom from '../assets/freedom.png';
 import experiance from '../assets/experiance.png';
 import trust from '../assets/trust.png';
-import support from '../assets/technical-support.png';
  
 const ChooseUs = () => {
     return (
