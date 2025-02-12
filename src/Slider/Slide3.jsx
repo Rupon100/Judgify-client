@@ -8,7 +8,7 @@ const Slide3 = () => {
                 <p>Share your experiences openly and honestly, because every voice matters.</p>
             </div>
             <div>
-                <img className='max-w-[400px]' src={review3} alt="" />
+                <img className='max-w-[400px] rounded-xl max-h-300 object-cover' src={review3} alt="" />
             </div>
         </div>
     );

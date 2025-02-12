@@ -8,7 +8,7 @@ const Slide4 = () => {
                      <p>Become a part of our community and contribute valuable reviews to help others make informed decisions.</p>
                  </div>
                  <div>
-                     <img className='max-w-[400px]' src={review2} alt="" />
+                     <img className='max-w-[400px] rounded-xl h-300 object-cover' src={review2} alt="" />
                  </div>
              </div>
          );
